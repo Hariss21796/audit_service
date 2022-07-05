@@ -1,15 +1,19 @@
 package com.alzohar.audit.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.envers.Audited;
+import org.apache.commons.lang.SerializationUtils;
 
 import lombok.Data;
 
@@ -17,7 +21,7 @@ import lombok.Data;
 @Data
 @Table(name = "product_service_table")
 @EntityListeners(CustomAuditEntityListner.class)
-public class Product extends Auditable<String> {
+public class Product extends Auditable<String> implements Serializable {
 
 	@Id
 	@Column(name = "prod_id")
@@ -38,6 +42,13 @@ public class Product extends Auditable<String> {
 	@Column(name = "price")
 	private double price;
 
+	@Transient
+	private transient Product oldValue;
+
+	@PostLoad
+	private void saveState() {
+		this.oldValue = (Product) SerializationUtils.clone(this); // from apache commons-lang
+	}
 
 //	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //	@JoinTable(name = "audit_user_prod", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "user_id"))

@@ -18,17 +18,17 @@ import lombok.Setter;
 public abstract class Auditable<U> {
 
 	@CreatedBy
-	protected U createdBy;
+	private U createdBy;
 
 	@CreatedDate
 	@Temporal(TIMESTAMP)
-	protected Date createdDate;
+	private Date createdDate;
 
 	@LastModifiedBy
-	protected U lastModifiedBy;
+	private U lastModifiedBy;
 
 	@LastModifiedDate
 	@Temporal(TIMESTAMP)
-	protected Date lastModifiedDate;
+	private Date lastModifiedDate;
 
 }

@@ -9,7 +9,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
-import org.springframework.data.annotation.CreatedBy;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +43,6 @@ public class AuditEntity extends Auditable<String> {
 	private String userId;
 
 	@Column(name = "user_name")
-	@CreatedBy
 	private String userName;
+
 }
